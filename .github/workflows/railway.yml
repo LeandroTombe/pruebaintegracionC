@@ -1,0 +1,26 @@
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v2
+    
+          - name: Install Railway CLI
+            run: |
+              curl -sSL https://get.railway.app | bash
+    
+          - name: Login to Railway
+            env:
+              RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+            run: railway login --token "${RAILWAY_TOKEN}"
+    
+          - name: Deploy to Railway
+            run: railway up
