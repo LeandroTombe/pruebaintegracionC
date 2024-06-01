@@ -1,6 +1,9 @@
 name: Node.js CI
 
 on:
+  schedule:
+    - cron: '0 */1 * * *'  # Cada 1 hora
+  workflow_dispatch:
   push:
     branches: [ "main" ]
   pull_request:
