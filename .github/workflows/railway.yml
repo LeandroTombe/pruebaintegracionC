@@ -18,6 +18,10 @@ jobs:
       MONGO: ${{ secrets.MONGO_URL }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       PORT: ${{ secrets.PORT }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
@@ -29,12 +33,15 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@master
+    - name: Run SonarQube Scanner
       env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} //Sonar Token generated 
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} example URL (https://sq.bswlog.co.in/)
-  
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+          sonar-scanner \
+            -Dsonar.projectKey=is-2024 \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
     - name: Install Railway # 1
       run: npm i -g @railway/cli
           
