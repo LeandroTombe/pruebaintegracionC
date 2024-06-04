@@ -27,4 +27,4 @@ dist-ssr
 
 # archivos de configuracion
 
-railway.yml
+.github/workflows/railway.yml
