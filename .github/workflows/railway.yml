@@ -22,3 +22,10 @@ jobs:
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Deploy to Production on Railway
+        run: |
+          npm i -g @railway/cli
+          railway up --service pruebaintegracionC
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PRODUCTION }}
