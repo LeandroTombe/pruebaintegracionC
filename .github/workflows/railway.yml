@@ -1,61 +1,24 @@
-name: Deploy to Production
+name: Update Main from Staging
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Ejecutar cada 1 hora
+    - cron: '*/5 * * * *'  # Ejecutar cada 5 minutos
 
 jobs:
-  build:
-    name: Run unit tests
+  update-main:
+    name: Update Main
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-    env:
-      MONGO: ${{ secrets.MONGO_URL }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      PORT: ${{ secrets.PORT }}
-      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        ref: staging
-
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        
-
-    - name: Install dependencies 
-      run: npm ci
-
-    - name: Build project
-      run: npm run build --if-present
-
-    - name: Run test
-      run: npm test
-    
-    
-    #- name: SonarQube Scan
-    #  uses: sonarsource/sonarqube-scan-action@v1
-    #  env:
-    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL}}
-
-
-    - name: Install Railway # 1
-      run: npm i -g @railway/cli
-          
-    - name: Deploy to Staging on Railway
-      run: railway up --service pruebaintegracionC
-      env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PRODUCTION }} # 3
+      - name: Merge from Staging
+        run: |
+          git fetch origin
+          git merge origin/staging --no-edit
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
