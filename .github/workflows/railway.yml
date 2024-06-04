@@ -2,8 +2,10 @@ name: Node.js CI
 
 on:
   push:
-    - staging
+    branches:
+      - staging
 
+      
 jobs:
   build:
     name: Run unit tests
