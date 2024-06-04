@@ -2,7 +2,7 @@ name: Deploy to Production
 
 on:
   schedule:
-    - cron: '0 */1 * * *'  # Ejecutar cada 5 horas
+    - cron: '*/5 * * * *'  # Ejecutar cada 1 hora
 
 jobs:
   build:
