@@ -1,8 +1,10 @@
 name: Update Main from Staging
 
+
 on:
-  schedule:
-    - cron: '* * * * */3'  # Ejecutar cada 5 minutos
+  push:
+    branches:
+      - main
 
 jobs:
   update-main:
