@@ -1,9 +1,9 @@
 name: CI Workflow
 
 on:
-  pull_request:
+  push:
     branches: [ "staging", "main" ]
-    types: [opened, synchronize, reopened, closed]
+   
 
       
 jobs:
