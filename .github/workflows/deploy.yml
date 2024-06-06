@@ -1,39 +1,68 @@
-name: Update Main from Staging
-
+name: CI Workflow
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [ "staging", "main" ]
+    types: [opened, synchronize, reopened, closed]
 
+      
 jobs:
-  update-main:
-    name: Update Main
+  build:
+    name: Run unit tests
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [20.x]
+    env:
+      MONGO: ${{ secrets.MONGO_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      PORT: ${{ secrets.PORT }}
+      SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          ref: main
 
-      - name: Set Git identity
-        run: |
-          git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
-          git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+    - name : Git checkout 
+      uses: actions/checkout@v4
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies 
+      run: npm ci
+
+    - name: Build project
+      run: npm run build --if-present
+
+    - name: Run test
+      run: npm test
+    
+    
+    #- name: SonarQube Scan
+    #  uses: sonarsource/sonarqube-scan-action@v2
+    #  env:
+    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL}}
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}"
+      
+    - name: Build Docker image
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-image .
+      
+    - name: Push Docker image
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/my-image
 
 
-      - name: Merge from Staging
-        run: |
-          git fetch origin
-          git merge origin/staging  --no-edit
-          git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-
-      - name: Deploy to Production on Railway
-        run: |
-          npm i -g @railway/cli
-          railway up --service pruebaintegracionC
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PRODUCTION }}
+    - name: Install Railway
+      run: npm i -g @railway/cli
+          
+    - name: Deploy to Staging on Railway
+      run: railway up --service pruebaintegracionC
+      env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PRODUCTION}}
