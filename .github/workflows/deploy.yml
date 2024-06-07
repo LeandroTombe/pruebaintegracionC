@@ -59,7 +59,7 @@ jobs:
     - name: build and  Push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: .
+        context: .s
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
       
@@ -68,5 +68,5 @@ jobs:
           
     - name: Deploy to Railway
       run: |
-          echo ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} | railway login --token
+          railway login <<< $RAILWAY_DOCKER_PRODUCTION
           railway project deploy --from 'docker://${{ secrets.DOCKER_USERNAME }}/dracosnape-app:latest'
