@@ -77,7 +77,7 @@ describe("POST /signup", () => {
     // Esperamos un error 400 (Bad Request) porque el usuario ya existe
     expect(response.status).toBe(400);
     // Esperamos que el mensaje de la respuesta sea "Email or username already taken"
-    expect(response.body.message).toBe("Email or username already taken12");
+    expect(response.body.message).toBe("Email or username already taken");
   });
 
   it("should return an error if any required field is missing", async () => {
