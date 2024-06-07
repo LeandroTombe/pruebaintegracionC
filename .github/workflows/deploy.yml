@@ -20,17 +20,17 @@ jobs:
       PORT: ${{ secrets.PORT }}
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+      RAILWAY_DOCKER_PRODUCTION: ${{ secrets.RAILWAY_TOKEN }}
 
     steps:
 
     - name : Git checkout 
       uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Use Node.js version 20
+      uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20'
         cache: 'npm'
 
     - name: Install dependencies 
@@ -59,11 +59,12 @@ jobs:
     - name: build and  Push Docker image
       uses: docker/build-push-action@v3
       with:
+        context: .
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
 
           
-    - name: Deploy to Staging on Railway
-      run: railway up --service pruebaintegracionC
-      env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PRODUCTION}}
+    - name: Deploy to Railway
+      run: |
+          echo ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} | railway login --token
+          railway project deploy --from 'docker://${{ secrets.DOCKER_USERNAME }}/dracosnape-app:latest'
