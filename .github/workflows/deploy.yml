@@ -67,5 +67,5 @@ jobs:
           
     - name: Deploy to Railway
       run: |
-          railway login <<< $RAILWAY_DOCKER_PRODUCTION
-          railway project deploy --from 'docker://${{ secrets.DOCKER_USERNAME }}/dracosnape-app:latest'
+        railway login
+        railway project deploy --from 'docker://${{ secrets.DOCKER_USERNAME }}/dracosnape-app:latest'
