@@ -68,10 +68,7 @@ jobs:
     - name: Install Railway # 1
       run: npm i -g @railway/cli
           
-    - name: Deploy to Railway
+    - name: Deploy 
+      run: railway up --service deploydocker
       env:
-        RAILWAY_DOCKER_PRODUCTION: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }}
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      run: |
-        echo $RAILWAY_TOKEN | railway login ${{secrets.RAILWAY_DOCKER_PRODUCTION }}
-        railway deployment create --image ${DOCKER_USERNAME}/dracosnape-app:latest
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} 
