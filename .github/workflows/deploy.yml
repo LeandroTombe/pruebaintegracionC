@@ -59,7 +59,6 @@ jobs:
     - name: build and  Push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: .s
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
       
