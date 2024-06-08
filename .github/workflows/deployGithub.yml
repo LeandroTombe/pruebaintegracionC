@@ -23,6 +23,8 @@ jobs:
 
     - name : Git checkout 
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Use Node.js version 20
       uses: actions/setup-node@v4
