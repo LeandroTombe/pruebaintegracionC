@@ -18,6 +18,9 @@ jobs:
         git config --global user.email "leandro@gmail.com"
         git config --global user.name "Leandro tombetta"
 
+    - name: Verificar todas las ramas remotas
+      run: git fetch origin
+  
     - name: Actualizar rama main desde staging
       if: github.ref == 'refs/heads/main'  # Ejecutar solo si la rama es main
       run: |
