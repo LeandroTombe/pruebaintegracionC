@@ -3,7 +3,7 @@ name: Deploy on Railway using Docker
 on:
   pull_request:
     branches:
-      main
+      staging
 
 
 
