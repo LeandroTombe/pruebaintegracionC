@@ -3,7 +3,7 @@ name: Deploy on Railway using Github repository
 on:
   pull_request:
     branches:
-      main
+      staging
    
       
 jobs:
