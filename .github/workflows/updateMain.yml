@@ -1,9 +1,7 @@
 name: Actualizar main desde staging
 
 on:
-  push:
-    branches:
-    - main
+  workflow_dispatch
 
 jobs:
   update_main:
