@@ -46,7 +46,7 @@ jobs:
         git checkout main
         git pull origin main
         git checkout main
-        git merge --no-commit --no-ff staging
+        git merge --no-commit --no-ff main
         git diff --name-only --diff-filter=U
     
     
