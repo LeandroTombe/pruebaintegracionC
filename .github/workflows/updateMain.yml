@@ -1,0 +1,26 @@
+name: Actualizar main desde staging
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'  # Ejecutar cada 1 minuto (puedes ajustar según tus necesidades)
+
+jobs:
+  update_main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Configurar Git
+      run: |
+        git config --global user.email "leandro@gmail.com"
+        git config --global user.name "Leandro tombetta"
+
+    - name: Actualizar rama main desde staging
+      run: |
+        git checkout staging
+        git pull origin staging
+        git checkout main
+        git merge staging --no-edit
+        git push origin main
