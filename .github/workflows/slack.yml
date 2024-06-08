@@ -3,14 +3,25 @@ name: Notify Slack on Release
 on:
   release:
     types:
-      - created
+       - created
+
 
 jobs:
   notify_slack:
     runs-on: ubuntu-latest
+
+
     name: Notificar en slack la nueva release
     steps:
       - name: Notify Slack on Release
         uses: tryfabric/notify-slack-on-release@1.0.0
         with:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+    
+          
+      - name: Notify Slack on Success
+        if: always() && success()
+        run: |
+            curl -X POST -H 'Content-type: application/json' --data '{
+            "text": "The workflow for `'"${{ github.repository }}"'` has completed successfully. Event: `'"${{ steps.event_type.outputs.event_type }}"'`."
+             }' ${{ secrets.SLACK_WEBHOOK_URL }}
