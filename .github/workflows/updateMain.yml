@@ -26,4 +26,4 @@ jobs:
         git pull origin staging
         git checkout main
         git merge staging --allow-unrelated-histories --no-edit
-        git push origin main
+        git push https://x-access-token:${{ secrets.TOKEN_GITHUB }}@github.com/LeandroTombe/pruebaintegracionC.git HEAD:main
