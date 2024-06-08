@@ -1,8 +1,9 @@
 name: Actualizar main desde staging
 
 on:
-  schedule:
-    - cron: '*/1 * * * *'  # Ejecutar cada 1 minuto (puedes ajustar según tus necesidades)
+  push:
+    branches:
+    - main
 
 jobs:
   update_main:
