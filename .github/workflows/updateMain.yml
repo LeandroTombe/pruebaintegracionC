@@ -1,0 +1,31 @@
+name: Actualizar main desde staging
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  update_main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Configurar Git
+      run: |
+        git config --global user.email "leandro@gmail.com"
+        git config --global user.name "Leandro tombetta"
+
+    - name: Verificar todas las ramas remotas
+      run: git fetch origin
+  
+    - name: Actualizar rama main desde staging
+      if: github.ref == 'refs/heads/main'  # Ejecutar solo si la rama es main
+      run: |
+        git checkout staging
+        git pull origin staging
+        git checkout main
+        git merge staging --allow-unrelated-histories --no-edit
+        git push origin main
