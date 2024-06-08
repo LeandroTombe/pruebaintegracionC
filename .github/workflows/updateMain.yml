@@ -18,6 +18,7 @@ jobs:
         git config --global user.name "Leandro tombetta"
 
     - name: Actualizar rama main desde staging
+      if: github.ref == 'refs/heads/main'  # Ejecutar solo si la rama es main
       run: |
         git checkout staging
         git pull origin staging
