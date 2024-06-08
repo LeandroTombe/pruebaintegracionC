@@ -1,8 +1,9 @@
 name: CI Workflow
 
 on:
-  push:
-    branches: [ "staging", "main" ]
+  pull_request:
+    branches:
+      main
    
 
       
@@ -20,17 +21,17 @@ jobs:
       PORT: ${{ secrets.PORT }}
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
+      RAILWAY_DOCKER_PRODUCTION: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }}
 
     steps:
 
     - name : Git checkout 
       uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Use Node.js version 20
+      uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20'
         cache: 'npm'
 
     - name: Install dependencies 
@@ -62,11 +63,13 @@ jobs:
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
 
-
-    - name: Install Railway
+    - name: Pull Docker image
+      run: docker pull ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
+      
+    - name: Install Railway # 1
       run: npm i -g @railway/cli
           
-    - name: Deploy to Staging on Railway
-      run: railway up --service pruebaintegracionC
+    - name: Deploy 
+      run: railway up --service deploydocker
       env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_PRODUCTION}}
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} 
