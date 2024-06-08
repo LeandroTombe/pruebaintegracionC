@@ -62,6 +62,9 @@ jobs:
         push: true
         tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
 
+
+    - name: Install Railway
+      run: npm i -g @railway/cli
           
     - name: Deploy to Staging on Railway
       run: railway up --service pruebaintegracionC
