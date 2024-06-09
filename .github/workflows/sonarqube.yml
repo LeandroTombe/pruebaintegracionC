@@ -20,7 +20,7 @@ jobs:
 
 
       - name: Test and coverage
-        run: npm jest --coverage
+        run: npm test --coverage
 
 
       - name: SonarCloud Scan
