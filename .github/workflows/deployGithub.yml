@@ -16,7 +16,7 @@ jobs:
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       PORT: ${{ secrets.PORT }}
       SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       RAILWAY_DOCKER_PRODUCTION: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }}
 
     steps:
