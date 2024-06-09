@@ -19,9 +19,3 @@ jobs:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
     
           
-      - name: Notify Slack on Success
-        if: always() && success()
-        run: |
-            curl -X POST -H 'Content-type: application/json' --data '{
-            "text": "The workflow for `'"${{ github.repository }}"'` has completed successfully. Event: `'"${{ steps.event_type.outputs.event_type }}"'`."
-             }' ${{ secrets.SLACK_WEBHOOK_URL }}
