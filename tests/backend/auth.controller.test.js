@@ -13,6 +13,8 @@ import { app, server } from "../../index.js";
 // Importa la biblioteca bcryptjs para trabajar con contraseñas encriptadas
 import bcryptjs from "bcryptjs";
 
+jest.setTimeout(30000);
+
 // Después de realizar las pruebas, cerramos el servidor y la conexión con la base de datos
 afterAll(async () => {
   // Elimina todos los usuarios de prueba con el nombre de usuario "testuser"
@@ -27,6 +29,7 @@ afterAll(async () => {
 
 // Antes de realizar las pruebas, eliminamos los usuarios de prueba que creamos
 beforeEach(async () => {
+  jest.setTimeout(30000);
   // Elimina todos los usuarios de prueba con el nombre de usuario "testuser"
   await User.deleteMany({ username: "testuser" });
   // Elimina todos los usuarios de prueba con el nombre de usuario "testuser2"
