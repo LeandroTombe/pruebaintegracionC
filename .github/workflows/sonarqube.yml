@@ -12,7 +12,6 @@ jobs:
 
     env:
       MONGO: ${{ secrets.MONGO_URL }}
-      JWT_SECRET: ${{ secrets.JWT_SECRET }}
       PORT: ${{ secrets.PORT }}
 
     steps:
@@ -20,12 +19,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-  
-      - name: Use Node.js version 20
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
   
       - name: Install dependencies 
         run: npm ci
