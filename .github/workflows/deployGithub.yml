@@ -41,20 +41,19 @@ jobs:
     - name: Run test
       run: npm test
 
-    - name: Verificar cambios en la rama staging
+    - name: Checkout staging
+      run: |
+        git remote add staging https://github.com/LeandroTombe/pruebaintegracionC.git
+        git fetch staging
+        git checkout -b staging staging/staging
+
+    - name: Try merge
       run: |
         git checkout main
-        git pull origin main
-        git checkout main
-        git merge --no-commit --no-ff main
-        git diff --name-only --diff-filter=U
+        git merge staging --no-commit --no-ff || echo "Conflicts detected"
+      continue-on-error: true
     
     
-    #- name: SonarQube Scan
-    #  uses: sonarsource/sonarqube-scan-action@v2
-    #  env:
-    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL}}
   
     - name: Install Railway # 1
       run: npm i -g @railway/cli
