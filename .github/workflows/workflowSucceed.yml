@@ -1,4 +1,4 @@
-name: Notificar que la actualizacion a main ha sido correcto
+name: La actualizacion a main desde staging ha sido correcto
 
 on:
   workflow_run:
