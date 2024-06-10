@@ -1,0 +1,20 @@
+name: Notificar que el workflow "Deploy_desde_github" ha sido correcto
+
+on:
+  workflow_run:
+    workflows: deployGithub
+    types:
+      - completed
+
+jobs:
+  notify-slack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notificar por slack
+        uses: rtCamp/action-slack-notify@v2
+        with:
+          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          status: ${{ job.status }}
+          text: "GitHub Actions workflow completed successfully!"
+          username: 'GitHub Actions'
+          icon_emoji: ':rocket:'
