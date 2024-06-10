@@ -9,23 +9,28 @@ jobs:
 
     steps:
     - name: Checkout código
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Configurar Git
       run: |
         git config --global user.email "leandro@gmail.com"
         git config --global user.name "Leandro tombetta"
 
-    - name: Verificar todas las ramas remotas
-      run: git fetch origin
-  
-    - name: Actualizar rama main desde staging
-      if: github.ref == 'refs/heads/main'  # Ejecutar solo si la rama es main
+    - name: Fetch all branches
+      run: git fetch --all
+
+    - name: Checkout staging
+      run: git checkout staging
+
+    - name: Update staging from remote
+      run: git pull origin staging
+
+    - name: Merge staging into main
       run: |
-        git checkout staging
-        git pull origin staging
-        git checkout main
-        git merge staging -X theirs || echo "subiendo a main"
-        git push origin main
+          git checkout main
+          git merge staging -X theirs || echo "Conflictos detectados, revise manualmente."
+          
+    - name: Push changes to main
+      run: git push origin main
       env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
