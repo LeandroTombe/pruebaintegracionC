@@ -2,7 +2,7 @@ name: Notificar que el workflow "Deploy_desde_github" ha sido correcto
 
 on:
   workflow_run:
-    workflows: deployGithub
+    workflows: ["Actualizar main desde staging"]
     types:
       - completed
 
