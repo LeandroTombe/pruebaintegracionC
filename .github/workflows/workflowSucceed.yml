@@ -9,14 +9,10 @@ on:
 jobs:
   notify-slack:
     runs-on: ubuntu-latest
-    steps:
 
-    - uses: actions/checkout@v4
-    - name: notificar por slack
-      uses: rtCamp/action-slack-notify@v2
+    steps:
+    - uses: ravsamhq/notify-slack-action@v2
       with:
-        text: "GitHub Actions workflow completed with status: ${{ job.status }}"
-        username: '"Actualizar main desde staging'
-        icon_emoji: ':rocket:'
+        status: success
       env:
-        SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
