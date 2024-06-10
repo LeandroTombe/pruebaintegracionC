@@ -1,4 +1,4 @@
-name: Notificar que el workflow ha sido correcto
+name: Notificar que la actualizacion a main ha sido correcto
 
 on:
   workflow_run:
@@ -10,11 +10,13 @@ jobs:
   notify-slack:
     runs-on: ubuntu-latest
     steps:
-      - name: Notificar por slack
-        uses: rtCamp/action-slack-notify@v2
-        with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL}}
-          status: ${{ job.status }}
-          text: "GitHub Actions workflow completed successfully!"
-          username: 'GitHub Actions'
-          icon_emoji: ':rocket:'
+
+    - uses: actions/checkout@v4
+    - name: notificar por slack
+      uses: rtCamp/action-slack-notify@v2
+      with:
+        text: "GitHub Actions workflow completed with status: ${{ job.status }}"
+        username: '"Actualizar main desde staging'
+        icon_emoji: ':rocket:'
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
