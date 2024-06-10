@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 
 jobs:
-  update_main:
+  Subir_repositorio_main:
     runs-on: ubuntu-latest
 
     steps:

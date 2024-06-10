@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-  notify_slack:
+  notificar_slack:
     runs-on: ubuntu-latest
 
 

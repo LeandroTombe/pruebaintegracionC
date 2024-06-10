@@ -7,7 +7,7 @@ on:
    
       
 jobs:
-  build:
+  Deploy_desde_github:
 
     runs-on: ubuntu-latest
 
@@ -26,19 +26,19 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Use Node.js version 20
+    - name: Usar version de node 20
       uses: actions/setup-node@v4
       with:
         node-version: '20'
         cache: 'npm'
 
-    - name: Install dependencies 
+    - name: Instalar dependencias
       run: npm ci
 
-    - name: Build project
+    - name: Construir projecto
       run: npm run build --if-present
 
-    - name: Run test
+    - name: Correr los test
       run: npm test
 
     - name: Verificar cambios en la rama staging
@@ -49,12 +49,6 @@ jobs:
         git merge --no-commit --no-ff main
         git diff --name-only --diff-filter=U
     
-    
-    #- name: SonarQube Scan
-    #  uses: sonarsource/sonarqube-scan-action@v2
-    #  env:
-    #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #    SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL}}
   
     - name: Install Railway # 1
       run: npm i -g @railway/cli
