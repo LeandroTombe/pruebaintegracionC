@@ -1,4 +1,4 @@
-name: Notificar que el workflow "Deploy_desde_github" ha sido correcto
+name: Notificar que el workflow ha sido correcto
 
 on:
   workflow_run:
