@@ -1,5 +1,5 @@
 
 
 export const sayHello = (req,res) => {
-    res.send("Hello world desde hoy")
+    res.send("Hello world prueba de trabajo")
 }

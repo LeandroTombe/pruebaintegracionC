@@ -16,13 +16,13 @@ jobs:
         git config --global user.email "leandro@gmail.com"
         git config --global user.name "Leandro tombetta"
 
-    - name: Fetch all branches
-      run: git fetch --all
+    #- name: Traer todas las ramas
+    #  run: git fetch --all
 
     - name: Checkout staging
       run: git checkout staging
 
-    - name: Update staging from remote
+    - name: actualizar el staging desde el remoto
       run: git pull origin staging
 
     - name: Merge staging into main
@@ -34,3 +34,19 @@ jobs:
       run: git push origin main
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+  notify-slack:
+    runs-on: ubuntu-latest
+    needs: Subir_repositorio_main
+    if: success()
+
+
+    steps:
+    - uses: ravsamhq/notify-slack-action@v2
+      with:
+        status: success
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
