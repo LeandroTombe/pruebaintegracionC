@@ -1,4 +1,4 @@
-name: Deploy on Railway using Github repository
+name: Deploy usando repositorio github
 
 on:
   pull_request:

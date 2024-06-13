@@ -18,8 +18,8 @@ jobs:
         git config --global user.email "leandro@gmail.com"
         git config --global user.name "Leandro tombetta"
 
-    #- name: Traer todas las ramas
-    #  run: git fetch --all
+    - name: Traer todas las ramas
+      run: git fetch --all
 
     - name: Checkout staging
       run: git checkout staging
@@ -36,9 +36,6 @@ jobs:
       run: git push origin main
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-
 
   notify-slack:
     runs-on: ubuntu-latest

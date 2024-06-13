@@ -1,4 +1,4 @@
-name: Notify Slack on Release
+name: Notificar por slack nuevo release
 
 on:
   release:
