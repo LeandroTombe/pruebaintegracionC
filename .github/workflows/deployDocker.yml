@@ -1,5 +1,4 @@
-name: Deploy Docker on Railway
-
+name: Deploy en railway utilizando un imagen de docker
 on:
   pull_request:
     branches:
