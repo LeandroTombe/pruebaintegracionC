@@ -36,6 +36,8 @@ beforeEach(async () => {
   await User.deleteMany({ username: "testuser2" });
 });
 
+
+
 // Pruebas de registro de usuario
 describe("POST /signup", () => {
   it("should create a new user and return the user data without the password", async () => {
