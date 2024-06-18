@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.routes.js";
+import helloWorldRoutes from "./routes/helloWorld.routes.js"
 import cors from "cors";
 // dotenv.config() se utiliza para cargar las variables de entorno de un archivo .env en el objeto process.env
 import dotenv from "dotenv";
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(cookieParser());
 // ======> RUTAS <====== // 
 app.use("/api/auth", authRoutes);
+app.use("/", helloWorldRoutes)
 // Creamos el puerto donde se va a estar ejecutando nuestro servidor
 const port = process.env.PORT || 3000;
 // Iniciamos el servidor en el puerto que definimos
