@@ -18,14 +18,14 @@ jobs:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
       
-          - name: build and  Push Docker image
-            uses: docker/build-push-action@v3
-            with:
+      - name: build and  Push Docker image
+        uses: docker/build-push-action@v3
+        with:
                 push: true
                 tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
 
-          - name: Pull Docker image
-            run: docker pull ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
+      - name: Pull Docker image
+        run: docker pull ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
             
 #          - name: Install Railway # 1
 #            run: npm i -g @railway/cli
