@@ -28,10 +28,10 @@ jobs:
           - name: Pull Docker image
             run: docker pull ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
             
-          - name: Install Railway # 1
-            run: npm i -g @railway/cli
-          
-          - name: Deploy 
-            run: railway up --service deploydocker
-            env:
-                RAILWAY_TOKEN: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} 
+#          - name: Install Railway # 1
+#            run: npm i -g @railway/cli
+#          
+#          - name: Deploy 
+#            run: railway up --service deploydocker
+#            env:
+#                RAILWAY_TOKEN: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} 
