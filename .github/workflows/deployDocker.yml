@@ -18,16 +18,19 @@ jobs:
             username: ${{ secrets.DOCKER_USERNAME }}
             password: ${{ secrets.DOCKER_PASSWORD }}
       
-      - name: Build and Push Imagen de docker
+      - name: build and  Push Docker image
         uses: docker/build-push-action@v3
         with:
-            push: true
-            tags: ${{ secrets.DOCKER_USERNAME }}/dracosnape-app:latest
+                push: true
+                tags: ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
 
-      - name: Instalacion de railway
-        run: npm i -g @railway/cli
-          
-      - name: Deploy a Railway
-        run: railway up --service deploydocker
-        env:
-            RAILWAY_TOKEN: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }}
+      - name: Pull Docker image
+        run: docker pull ${{secrets.DOCKER_USERNAME}}/dracosnape-app:latest
+            
+#          - name: Install Railway # 1
+#            run: npm i -g @railway/cli
+#          
+#          - name: Deploy 
+#            run: railway up --service deploydocker
+#            env:
+#                RAILWAY_TOKEN: ${{ secrets.RAILWAY_DOCKER_PRODUCTION }} 
